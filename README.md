@@ -28,7 +28,7 @@ $ tar -C ~/tools -xzf node-v6.10.0-linux-x64.tar.gz
 $ sudo ln -s ~/tools/node-v6.10.0-linux-x64/bin/node /usr/local/bin/node
 $ sudo ln -s ~/tools/node-v6.10.0-linux-x64/bin/npm /usr/local/bin/npm
 
-5. 执行 node -v 以及 npm -v ，如果输出 nodejs 和npm 的版本号，说明安装成功
+5. 执行 node -v 以及 npm -v ，如果输出 nodejs 和 npm 的版本号，说明安装成功
 
 二、配置 npm 源（可选）
 $ npm config set registry http://registry.npm.taobao.org
