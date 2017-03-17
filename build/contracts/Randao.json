@@ -1,0 +1,116 @@
+{
+  "contract_name": "Randao",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "campaigns",
+      "outputs": [
+        {
+          "name": "bnum",
+          "type": "uint32"
+        },
+        {
+          "name": "deposit",
+          "type": "uint96"
+        },
+        {
+          "name": "random",
+          "type": "uint256"
+        },
+        {
+          "name": "bountypot",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "numCampaigns",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_campaignID",
+          "type": "uint256"
+        },
+        {
+          "name": "_s",
+          "type": "uint256"
+        }
+      ],
+      "name": "commit",
+      "outputs": [],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_campaignID",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRandom",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_bnum",
+          "type": "uint32"
+        },
+        {
+          "name": "_deposit",
+          "type": "uint96"
+        }
+      ],
+      "name": "newCampaign",
+      "outputs": [
+        {
+          "name": "_campaignID",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x606060405234610000575b6103c5806100196000396000f300606060405263ffffffff60e060020a600035041663141961bc81146100505780632c0f7b6f1461009a5780635bf56bc4146100b9578063cd4b6914146100c9578063e3b6930e146100eb575b610000565b346100005761006060043561011f565b6040805163ffffffff90951685526bffffffffffffffffffffffff9093166020850152838301919091526060830152519081900360800190f35b34610000576100a761016f565b60408051918252519081900360200190f35b6100c7600435602435610175565b005b34610000576100a760043561021c565b60408051918252519081900360200190f35b6100a763ffffffff600435166bffffffffffffffffffffffff6024351661024e565b60408051918252519081900360200190f35b600181815481101561000057906000526020600020906005020160005b508054600182015460029092015463ffffffff821693506401000000009091046bffffffffffffffffffffffff16919084565b60005481565b6000600183815481101561000057906000526020600020906005020160005b50805490915064010000000090046bffffffffffffffffffffffff16341480156101c45750805463ffffffff1643105b15610216576040805180820182528381526000602080830182815273ffffffffffffffffffffffffffffffffffffffff3316835260048601909152929020905181559051600191820155828002908201555b5b505050565b60006000600183815481101561000057906000526020600020906005020160005b509050806001015491505b50919050565b60006000600180548091906001018154818355818115116102bd576005028160050283600052602060002091820191016102bd91905b808211156102b95780546fffffffffffffffffffffffffffffffff191681556000600182018190556002820155600501610284565b5090565b5b5050509150600182815481101561000057906000526020600020906005020160005b506000805460019081018255825463ffffffff191663ffffffff8816176fffffffffffffffffffffffff0000000019166401000000006bffffffffffffffffffffffff88160217835534600284018190556040805180820182523373ffffffffffffffffffffffffffffffffffffffff9081168083526020808401958652908752600388019052919094209351845473ffffffffffffffffffffffffffffffffffffffff191691161783555191015590505b50929150505600a165627a7a7230582061e41c79bd1590ae5e2c889d95425c144aa360be7e6b43b10ede2e5e678f7b510029",
+  "networks": {
+    "1489568979584": {
+      "events": {},
+      "links": {},
+      "address": "0x25fa2f446df1837aff2ccbdbe79609979f400e66",
+      "updated_at": 1489569038884
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1489569038884
+}
