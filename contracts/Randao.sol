@@ -1,8 +1,8 @@
 pragma solidity ^0.4.8;
 
 contract Randao {
-  struct Participant {
-      uint256   secret; // 密文
+    struct Participant {
+      uint256   secret; // 随机数
       uint256   reward; // 奖励
   } // 参与者
   
@@ -14,7 +14,6 @@ contract Randao {
   struct Campaign {
       uint32    bnum;
       uint96    deposit;
-	  
       uint256   random;
       uint256   bountypot;
 
@@ -68,5 +67,4 @@ contract Randao {
       Campaign c = campaigns[_campaignID];
       return c.random;
   }
- }
- 
+}
