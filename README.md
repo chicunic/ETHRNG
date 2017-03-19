@@ -1,9 +1,9 @@
 # ETHRNG
 
 基于以太坊区块链的随机数生成器
-Random number generator based on the ethereum
+Random Number Generator based on the Ethereum blockchain
 
-安装步骤
+开发环境安装步骤：
 
 MacOS 10.12
 
@@ -12,9 +12,14 @@ https://nodejs.org
 
 2. 下载并安装 truffle
 
+3. 安装 testrpc
+$ npm install -g ethereumjs-testrpc
+
+--------------------------------
+
 Ubuntu 16.04 (x64)
 
-一、安装 Nodejs
+一、安装 Nodejs：
 
 1. 下载 Nodejs
 https://nodejs.org
@@ -41,4 +46,15 @@ $ sudo npm install -g truffle
 $ sudo ln -s ~/tools/node-v6.10.0-linux-x64/bin/truffle /usr/local/bin/truffle
 安装完成后输入truffle，会显示truffle版本和用法，说明安装成功
 
+五、安装 testrpc
+$ npm install -g ethereumjs-testrpc
+
 Build on 12 March, 2017
+
+--------------------------------
+
+参考资料：
+1. https://github.com/ethereum/go-ethereum
+2. https://nodejs.org
+3. https://solidity.readthedocs.io
+4. https://github.com/ethereumjs/testrpc
