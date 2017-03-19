@@ -36,6 +36,7 @@ https://nodejs.org
 
 
 3. 解压
+
 $ tar -C ~/tools -xzf node-v6.10.0-linux-x64.tar.gz
 
 
