@@ -5,6 +5,7 @@ contract Randao {
       uint256   secret;		//随机数
       uint256   reward;		//奖励
 	  uint256	number;		//编号
+      bool      partaken;   //是否已经参与过
 	  bool 		rewarded;	//是否奖励
   }
   
@@ -17,6 +18,7 @@ contract Randao {
       uint32    bnum;		//截至时间
       uint96    deposit;	//押金
 	  
+      uint256   campaignshash;//活动块hash，用于计算那些人参与随机运算    
 	  uint64	target;		//目标参与人数
 	  uint64	number;		//实际参与者人数
       uint256   random;		//随机数
@@ -28,7 +30,7 @@ contract Randao {
   uint256 public numCampaigns;		//活动数
   Campaign[] public campaigns;		//活动数组
   //address public founder;
-  
+  //uint256 public campaignshash;
   function newCampaign(				//创建活动
       uint32 _bnum,
       uint96 _deposit,
@@ -40,6 +42,8 @@ contract Randao {
 	  c.target=_target;
       c.bnum = _bnum;
       c.deposit = _deposit;
+      c.campaignshash = uint(block.blockhash(block.number-1));
+      //campaignshash = c.campaignshash;
       c.bountypot = msg.value;
       c.consumers[msg.sender] = Consumer(msg.sender, msg.value);
   }
@@ -52,11 +56,6 @@ contract Randao {
   function commit(uint256 _campaignID, uint256 _s)  external payable {
       Campaign c = campaigns[_campaignID];
       commitmentCampaign(_campaignID, _s, c);
-	  /*if(msg.value==c.deposit&&block.number < c.bnum)
-	  {
-	  	c.participants[msg.sender] = Participant(_s,0);
-	 	c.random =_s*_s;
-	  }*/
   } 
   
   //随机数提交到活动
@@ -67,19 +66,15 @@ contract Randao {
 	  //Campaign c
   ) checkDeposit(c.deposit)
     checkTime(c.bnum)
+    beFalse(c.participants[msg.sender].partaken)
    	internal {
 	  uint64 num=c.number;
 	  c.number++;
-      c.participants[msg.sender] = Participant(_s,0,num,false);
+      c.participants[msg.sender] = Participant(_s,0,num,true,false);
 	  c.random +=_s;
   }
   
   
-  
-   /*function getRandom(uint256 _campaignID) external returns (uint256) {
-      Campaign c = campaigns[_campaignID];
-      return c.random;
-  }*/
   //是否为发起者
    modifier beConsumer(address _caddr) {
       if (_caddr != msg.sender) throw;
