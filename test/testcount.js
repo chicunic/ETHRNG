@@ -13,14 +13,20 @@ contract('select', function (accounts) {
 		}).then(function(num){
 			console.log('组合数',num.toNumber());
 			//return select.countFactorial(3,{from :accounts[0]})
-			return select.selectedCombination(3,1,1233,3,{from :accounts[0]})
+			return select.selectedCombination(4,2,12,6,{from :accounts[0]})
 		}).then((tx)=>{
 			console.log(tx);
 			return select.selectedResult.call();			
 			//return select.whetherSelected(0,{from: accounts[0]})
 		}).then(function(result){
 			console.log('当前组合对应的数值',result.toNumber());
+			return select.whetherSelected(3,{from: accounts[0]})
 			//console.log('选中',yes)
+		}).then(()=>{
+			return select.flag.call();
+		}).then((flag)=>{
+
+			console.log('flag',flag.toNumber());
 		})
 		
 	})
