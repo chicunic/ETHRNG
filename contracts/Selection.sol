@@ -76,9 +76,9 @@ contract Selection{
 	}
 
 	// 判断是否被选中
-	function whetherSelected(uint256 numSelected)
+	function whetherSelected(uint256 numParticipant, uint256 numSelected)
 		returns(bool) {
-		uint256 b = selectedResult >>(numSelected - 1)& 1;
+		uint256 b = selectedResult >>(numParticipant - numSelected)& 1;
 		if(b == 1)
 			return true;
 		else
