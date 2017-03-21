@@ -1,6 +1,6 @@
 pragma solidity ^0.4.8;
 
-contract Selection{
+contract Selection {
 	uint256 blockHash; // 发起者区块的 Hash
 	uint256 numParticipant; // 参与人数
 	uint256 numSelected; // 被选中的人数
