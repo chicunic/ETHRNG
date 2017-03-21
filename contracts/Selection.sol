@@ -6,7 +6,7 @@ contract Selection {
 	uint256 numSelected; // 被选中的人数
 	uint256 public numCombination; // 组合数 C(n,m)
 	uint256 public selectedResult; // 当前组合对应的数值
-
+	uint256 public flag;
 	// 计算组合数
 	function countCelected(uint256 numParticipant, uint256 numSelected)
 		returns(uint256) {
@@ -76,12 +76,15 @@ contract Selection {
 	}
 
 	// 判断是否被选中
-	function whetherSelected(uint256 numParticipant, uint256 numSelected)
+	function whetherSelected(uint256 numSelected)
 		returns(bool) {
-		uint256 b = selectedResult >>(numParticipant - numSelected)& 1;
+		uint256 b = selectedResult >>(numSelected - 1)& 1;
 		if(b == 1)
-			return true;
+		{
+			flag=1;
+			return true;}
 		else
 			return false;
 	}
+
 }
