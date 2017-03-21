@@ -1,27 +1,20 @@
 pragma solidity ^0.4.8;
 
 contract Selection{
-    struct Participant {
-        uint256 secret; // 随机数
-        uint256 reward; // 奖金
-        uint256 serialNumber; // 编号
-        address addrParticipant; // 地址
-
-    }
 
     uint256 blockHash; // 发起者区块的 Hash
     uint256 numParticipant; // 参与人数
     uint256 numSelected; // 被选中的人数
-    uint256 numCombination; // 组合数 C(n,m)
+    uint256 public numCombination; // 组合数 C(n,m)
     uint256 selectedResult; // 选中的参与者排列
-    bool[] public selected; // 某个用户是否被选中
+    bool[]  selected; // 某个用户是否被选中
     uint256[] result;
 
     // 计算组合数
     function countCelected(uint256 numParticipant, uint256 numSelected)
-        returns (uint256 numCombination) {
-           return countFactorial(numParticipant)
-            / (countFactorial(numSelected)*countFactorial(numParticipant - numSelected));
+      //  returns (uint256 numCombination) 
+    {
+            numCombination = countFactorial(numParticipant) / (countFactorial(numSelected)*countFactorial(numParticipant - numSelected));
     }
 
     // 计算阶乘
@@ -38,13 +31,15 @@ contract Selection{
 
     // 计算选中的参与者排列
     function selectedCombination(uint256 blockHash, uint256 numCombination)
-        returns (bool[] selected) {
+       // returns (bool[] selected)
+     {
         uint256 newHash = blockHash % numCombination;
         //uint256[] result;
         get_combinations(numCombination, numSelected, result, numSelected, newHash);
-        return selected;
+       // return selected;
     }
     uint256 selectedNo = 0;
+    //计算排列
     function get_combinations(uint256 n, uint256 m, uint256[] result, uint256 len, uint256 hashNo)
     {
     if (m == 0 || n < m)
