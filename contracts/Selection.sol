@@ -4,8 +4,8 @@ contract Selection {
 	uint256 blockHash; // 发起者区块的 Hash
 	uint256 numParticipant; // 参与人数
 	uint256 numSelected; // 被选中的人数
-	uint256 numCombination; // 组合数 C(n,m)
-	uint256 selectedResult; // 当前组合对应的数值
+	uint256 public numCombination; // 组合数 C(n,m)
+	uint256 public selectedResult; // 当前组合对应的数值
 
 	// 计算组合数
 	function countCelected(uint256 numParticipant, uint256 numSelected)
