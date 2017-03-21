@@ -69,8 +69,8 @@ contract Selection{
 						{
 							if (selected[k])
 							{
-							    selected[j] = selected[k];
-								selected[k] = false;
+							    selected[k] = selected[j];
+								selected[j] = true;
 								j++;
 							}
 						}
