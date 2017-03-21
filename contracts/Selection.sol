@@ -39,10 +39,8 @@ contract Selection{
 			selected[i] = true;
 		}
 		bool bFind = false;
-		do
-		{
-			for (i = 0; i < numParticipant; i++)
-			{
+		do {
+			for (i = 0; i < numParticipant; i++) {
 				selectedResult *= 2;
 				if (selected[i] == true) 
 					selectedResult += 1;
@@ -53,22 +51,17 @@ contract Selection{
 			}
 			selectedResult = 0; // 进行下一次组合前结果清0
 			bFind = false;
-			for (i = 0; i < numParticipant - 1; i++)
-			{
-				if (selected[i] == true && selected[i + 1] == false)
-				{
+			for (i = 0; i < numParticipant - 1; i++) {
+				if (selected[i] == true && selected[i + 1] == false) {
 					// 交换10为01
 					selected[i] = false;
 					selected[i + 1] = true;
 					bFind = true;
 					// 如果第一位为0，则将第i位置之前的1移到最左边，如为1则第i位置之前的1就在最左边，无需移动
-					if (selected[0] == false)
-					{
+					if (selected[0] == false) {
 						uint256 j =0;
-						for (uint256 k = 0; k < i; k++)
-						{
-							if (selected[k])
-							{
+						for (uint256 k = 0; k < i; k++) {
+							if (selected[k]) {
 							    selected[k] = selected[j];
 								selected[j] = true;
 								j++;
