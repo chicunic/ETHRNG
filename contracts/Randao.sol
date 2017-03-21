@@ -32,8 +32,9 @@ contract Randao {
 	uint256 public numCampaigns; // 活动数
 	Campaign[] public campaigns; // 活动数组
 	//address public founder;
-	uint256 public flag;
-	uint256 public numCombination = 12;
+	//uint256 public flag;
+	uint256 public numCombination = 6;
+	uint256 public selectedResult = 12;
 
 	// 创建活动
 	function newCampaign(uint32 _bnum, uint96 _deposit, uint256 _target)
@@ -192,9 +193,9 @@ contract Randao {
 			c.settled = true;
 			//numCombination = 12;
 			//numCombination = countCelected(c.number, c.target); // 计算组合数
-			uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash);
+			//uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash);
 			//selectedResult = 12;
-			flag = numCombination;
+			//flag = numCombination;
 			//flag = selectedResult;
 			for(uint256 i = 1; i <= c.number; i++) {
 				if(whetherSelected(c.number, i, selectedResult))
