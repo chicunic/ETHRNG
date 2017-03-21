@@ -12,7 +12,7 @@ contract Selection{
 		returns(uint256) {
 		numCombination = countFactorial(numParticipant) / (countFactorial(numSelected)*countFactorial(numParticipant - numSelected));
 		return numCombination;
-}
+	}
 
 	// 计算阶乘
 	function countFactorial(uint256 natural)
