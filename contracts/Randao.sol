@@ -32,9 +32,9 @@ contract Randao {
 	uint256 public numCampaigns; // 活动数
 	Campaign[] public campaigns; // 活动数组
 	//address public founder;
-	//uint256 public flag;
-	uint256 public numCombination = 6;
-	uint256 public selectedResult = 12;
+	uint256 public flag;
+	//uint256 public numCombination = 6;
+	//uint256 public selectedResult = 12;
 
 	// 创建活动
 	function newCampaign(uint32 _bnum, uint96 _deposit, uint256 _target)
@@ -88,14 +88,9 @@ contract Randao {
 
 	//提交随机数是否结束
 	modifier bountyPhase(uint256 _bnum) { if (block.number <= _bnum) throw; _; }
+
 	//检查是否达到目标参与者人数
 	modifier checkTarget(uint256 _target,uint256 _num) {if(_num < _target) throw; _;}
-	//获取随机数
-	function getRandom(uint256 _campaignID)
-		external returns (uint256) {
-			Campaign c = campaigns[_campaignID];
-			return returnRandom(c);
-	}
 
 	/*----------------
 	计算过程开始
@@ -186,14 +181,27 @@ contract Randao {
 	计算过程结束
 	----------------*/
 
+
+	function test() {
+		uint256 count=1;
+		count++;
+	}
+
+	//获取随机数
+	function getRandom(uint256 _campaignID)
+		returns (uint256) {
+			Campaign c = campaigns[_campaignID];
+			return returnRandom(c);
+	}
+
 	function returnRandom(Campaign storage c)
 		bountyPhase(c.bnum)
 		beConsumer(c.consumers[msg.sender].caddr)
 		internal returns (uint256) {
 			c.settled = true;
 			//numCombination = 12;
-			//numCombination = countCelected(c.number, c.target); // 计算组合数
-			//uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash);
+			uint256 numCombination = countCombinationNo(c.number, c.target); // 计算组合数
+			uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash);
 			//selectedResult = 12;
 			//flag = numCombination;
 			//flag = selectedResult;
