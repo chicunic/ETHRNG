@@ -46,7 +46,7 @@ contract('Randao', function (accounts) {
 				console.log('增加区块后区块高度', web3.eth.blockNumber);
 				return randao.getRandom.call(campaignID, { from: accounts[0] });
 			}).then((random) => {
-				console.log('随机数random:', random.toNumber());
+				console.log('随机数random:', random);
 				//return randao.flag.call();
 			})
 			.then(() => {

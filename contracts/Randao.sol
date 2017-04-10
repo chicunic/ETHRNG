@@ -4,7 +4,6 @@ contract Randao {
 	struct Participant {
 		uint256 secret; // 随机数
 		uint256 reward; // 奖励
-		//uint256 number; // 编号
 		bool partaken; // 是否已经参与过
 		bool rewarded; // 是否奖励
 	}
@@ -17,13 +16,13 @@ contract Randao {
 	struct Campaign { // 活动
 		uint32 bnum; //截至时间
 		uint96 deposit; //押金
-		uint256 campaignshash; // 活动块hash，用于计算那些人参与随机运算
+		//uint256 campaignshash; // 活动块hash，用于计算那些人参与随机运算
 		uint256	target; // 目标参与人数
 		uint256	number; // 实际参与者人数
-		uint256 random; // 随机数
+		bytes32 random; // 随机数
 		uint256 bountypot; // 奖金
 		bool settled; // 产生随机数是否成功
-		mapping (uint256 => uint256) secret; // 随机数种子集合
+		mapping (uint256 => bytes32) secret; // 随机数种子集合
 		mapping (address => Consumer) consumers; // 发起者
 		mapping (address => Participant) participants; // 参与者
 	}
@@ -31,10 +30,7 @@ contract Randao {
 	// 全局变量
 	uint256 public numCampaigns; // 活动数
 	Campaign[] public campaigns; // 活动数组
-	//address public founder;
 	uint256 public flag;
-	//uint256 public numCombination = 6;
-	//uint256 public selectedResult = 12;
 
 	// 创建活动
 	function newCampaign(uint32 _bnum, uint96 _deposit, uint256 _target)
@@ -45,8 +41,7 @@ contract Randao {
 			c.target=_target;
 			c.bnum = _bnum;
 			c.deposit = _deposit;
-			c.campaignshash = uint(block.blockhash(block.number-1));
-			//campaignshash = c.campaignshash;
+			//c.campaignshash = uint(block.blockhash(block.number-1));
 			c.bountypot = msg.value;
 			c.consumers[msg.sender] = Consumer(msg.sender, msg.value);
 	}
@@ -73,11 +68,9 @@ contract Randao {
 		internal {
 			c.number++;
 			uint256 num=c.number;
-			c.secret[num]=_s;
-			//c.number++;
-			//c.participants[msg.sender] = Participant(_s,0,num,true,false);
+			//c.secret[num]=_s;
+			c.secret[num]=sha3(_s);
 			c.participants[msg.sender] = Participant(_s,0,true,false);
-			//c.random +=_s;
 	}
 
 	//是否为发起者
@@ -97,6 +90,7 @@ contract Randao {
 	----------------*/
 
 	// 计算阶乘
+
 	function countFactorial(uint256 natural)
 		internal returns(uint256) {
 			uint256 factorial = 1;
@@ -109,6 +103,7 @@ contract Randao {
 	}
 	
 	// 计算组合数 C(n, m)
+
 	function countCombinationNo(uint256 numParticipant, uint256 numSelected)
 		internal returns(uint256) {
 			uint256 up = countFactorial(numParticipant); // 分子
@@ -118,6 +113,7 @@ contract Randao {
 	}
 
 	// 计算选中的参与者排列
+
 	function selectedCombination(uint256 numParticipant, uint256 numSelected, uint256 blockHash)
 		internal returns(uint256) {
 			uint256 numCombination = countCombinationNo(numParticipant, numSelected);
@@ -168,6 +164,7 @@ contract Randao {
 	}
 
 	// 判断是否被选中
+
 	function whetherSelected(uint256 numParticipant, uint256 numSelected, uint256 selectedResult)
 		internal returns(bool) {
 			uint256 b = selectedResult >>(numParticipant - numSelected)& 1;
@@ -181,7 +178,7 @@ contract Randao {
 	计算过程结束
 	----------------*/
 
-
+	//为了增加区块高度，不参与实际流程
 	function test() {
 		uint256 count=1;
 		count++;
@@ -189,7 +186,7 @@ contract Randao {
 
 	//获取随机数
 	function getRandom(uint256 _campaignID)
-		returns (uint256) {
+		returns (bytes32) {
 			Campaign c = campaigns[_campaignID];
 			return returnRandom(c);
 	}
@@ -197,17 +194,15 @@ contract Randao {
 	function returnRandom(Campaign storage c)
 		bountyPhase(c.bnum)
 		beConsumer(c.consumers[msg.sender].caddr)
-		internal returns (uint256) {
+		internal returns (bytes32) {
 			c.settled = true;
-			//numCombination = 12;
 			uint256 numCombination = countCombinationNo(c.number, c.target); // 计算组合数
-			uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash);
-			//selectedResult = 12;
-			//flag = numCombination;
-			//flag = selectedResult;
+			uint campaignshash=uint(block.blockhash(block.number-1));
+			//uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash);//计算选中结果
+			uint256 selectedResult = selectedCombination(c.number, c.target, campaignshash);//计算选中结果
 			for(uint256 i = 1; i <= c.number; i++) {
 				if(whetherSelected(c.number, i, selectedResult))
-					c.random=c.random+c.secret[i];
+					c.random^=c.secret[i];
 			}
 			return c.random;
 	}
