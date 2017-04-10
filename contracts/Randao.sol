@@ -90,8 +90,9 @@ contract Randao {
 	----------------*/
 
 	// 计算阶乘
-	function countFactorial(uint256 natural)	internal 
-		returns(uint256) {
+
+	function countFactorial(uint256 natural)
+		internal returns(uint256) {
 			uint256 factorial = 1;
 			if (natural == 0 && natural == 1)
 				return factorial;
@@ -102,8 +103,9 @@ contract Randao {
 	}
 	
 	// 计算组合数 C(n, m)
-	function countCombinationNo(uint256 numParticipant, uint256 numSelected)	internal 
-		returns(uint256) {
+
+	function countCombinationNo(uint256 numParticipant, uint256 numSelected)
+		internal returns(uint256) {
 			uint256 up = countFactorial(numParticipant); // 分子
 			uint256 down = countFactorial(numSelected)*countFactorial(numParticipant - numSelected); // 分母
 			uint256 numCombination = up / down;
@@ -111,8 +113,9 @@ contract Randao {
 	}
 
 	// 计算选中的参与者排列
-	function selectedCombination(uint256 numParticipant, uint256 numSelected, uint256 blockHash)	internal 
-		returns(uint256) {
+
+	function selectedCombination(uint256 numParticipant, uint256 numSelected, uint256 blockHash)
+		internal returns(uint256) {
 			uint256 numCombination = countCombinationNo(numParticipant, numSelected);
 			uint256 newHash = blockHash % numCombination;
 			uint256 countNo = 0; // 当前组合序号
@@ -161,8 +164,9 @@ contract Randao {
 	}
 
 	// 判断是否被选中
-	function whetherSelected(uint256 numParticipant, uint256 numSelected, uint256 selectedResult)	internal 
-		returns(bool) {
+
+	function whetherSelected(uint256 numParticipant, uint256 numSelected, uint256 selectedResult)
+		internal returns(bool) {
 			uint256 b = selectedResult >>(numParticipant - numSelected)& 1;
 			if(b == 1)
 				return true;
