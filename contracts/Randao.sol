@@ -50,7 +50,7 @@ contract Randao {
 	modifier beFalse(bool _t) { if (_t) throw; _; } // 判断是否为假
 
 	//参与者提交随机数
-	function commit(uint256 _campaignID, uint256 _s) external payable {
+	function commit(uint256 _campaignID, bytes32 _s) external payable {
 		Campaign c = campaigns[_campaignID];
 		commitmentCampaign(_campaignID, _s, c);
 	}
@@ -58,7 +58,7 @@ contract Randao {
 	//随机数提交到活动
 	function commitmentCampaign(
 		uint256 _campaignID,
-		uint256 _s,
+		bytes32 _s,
 		Campaign storage c
 		//Campaign c
 		) checkDeposit(c.deposit)
