@@ -2,7 +2,7 @@ pragma solidity ^0.4.8;
 
 contract Randao {
 	struct Participant {
-		uint256 secret; // 随机数
+		bytes32 secret; // 随机数
 		uint256 reward; // 奖励
 		bool partaken; // 是否已经参与过
 		bool rewarded; // 是否奖励
@@ -30,7 +30,6 @@ contract Randao {
 	// 全局变量
 	uint256 public numCampaigns; // 活动数
 	Campaign[] public campaigns; // 活动数组
-	uint256 public flag;
 
 	// 创建活动
 	function newCampaign(uint32 _bnum, uint96 _deposit, uint256 _target)
@@ -51,7 +50,7 @@ contract Randao {
 	modifier beFalse(bool _t) { if (_t) throw; _; } // 判断是否为假
 
 	//参与者提交随机数
-	function commit(uint256 _campaignID, uint256 _s) external payable {
+	function commit(uint256 _campaignID, bytes32 _s) external payable {
 		Campaign c = campaigns[_campaignID];
 		commitmentCampaign(_campaignID, _s, c);
 	}
@@ -59,7 +58,7 @@ contract Randao {
 	//随机数提交到活动
 	function commitmentCampaign(
 		uint256 _campaignID,
-		uint256 _s,
+		bytes32 _s,
 		Campaign storage c
 		//Campaign c
 		) checkDeposit(c.deposit)
