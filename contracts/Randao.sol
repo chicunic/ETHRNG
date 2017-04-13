@@ -2,7 +2,7 @@ pragma solidity ^0.4.8;
 
 contract Randao {
 	struct Participant {
-		uint256 secret; // 随机数
+		bytes32 secret; // 随机数
 		uint256 reward; // 奖励
 		bool partaken; // 是否已经参与过
 		bool rewarded; // 是否奖励
@@ -30,7 +30,6 @@ contract Randao {
 	// 全局变量
 	uint256 public numCampaigns; // 活动数
 	Campaign[] public campaigns; // 活动数组
-	uint256 public flag;
 
 	// 创建活动
 	function newCampaign(uint32 _bnum, uint96 _deposit, uint256 _target)
