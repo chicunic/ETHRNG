@@ -30,7 +30,7 @@ contract Randao {
 	// 全局变量
 	uint256 public numCampaigns; // 活动数
 	Campaign[] public campaigns; // 活动数组
-
+	uint256 public flag;
 	// 创建活动
 	function newCampaign(uint32 _bnum, uint96 _deposit, uint256 _target)
 		payable returns (uint256 _campaignID) {
@@ -178,9 +178,8 @@ contract Randao {
 	----------------*/
 
 	//为了增加区块高度，不参与实际流程
-	function test() {
-		uint256 count=1;
-		count++;
+	function test() {	
+		flag++;
 	}
 
 	//获取随机数
