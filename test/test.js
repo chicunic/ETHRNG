@@ -8,6 +8,7 @@ contract('Randao', function (accounts) {
 		var campaignID;
 		var secret;
 		var tem1;
+		var tem2
 		//console.log('gasprice:', web3.eth.gasPrice.toNumber())
 		console.log('target blockNumber: ', bnum);
 		console.log('newrandao at blockNumber: ', web3.eth.blockNumber);
@@ -17,7 +18,7 @@ contract('Randao', function (accounts) {
 			return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether") })
 		}).then((tx1) => {
 			//console.log('发起一次产生随机送活动交易信息', tx1);
-			var tem2= web3.eth.getBalance(accounts[0]).toNumber();
+			tem2= web3.eth.getBalance(accounts[0]).toNumber();
 			console.log('gas', tem1-tem2);
 			return randao.numCampaigns.call();
 		}).then(function (campaignid) {
@@ -47,9 +48,12 @@ contract('Randao', function (accounts) {
 			})
 			.then(() => {
 				console.log('增加区块后区块高度', web3.eth.blockNumber);
+				tem1= web3.eth.getBalance(accounts[0]).toNumber();
 				return randao.getRandom.call(campaignID, { from: accounts[0] });
 			}).then((random) => {
 				console.log('随机数random:', random);
+				tem2= web3.eth.getBalance(accounts[0]).toNumber();
+				console.log('gas', tem1-tem2);
 				//return randao.flag.call();
 			})
 			.then(() => {
@@ -64,7 +68,7 @@ contract('Randao', function (accounts) {
 				console.log('发起者返回赏金前余额', web3.eth.getBalance(accounts[0]).toNumber());
 				return randao.refundBounty(campaignID, { from: accounts[0] });
 			}).then((tx6) => {
-				console.log(tx6);
+				//console.log(tx6);
 				console.log('发起者返回赏金后余额', web3.eth.getBalance(accounts[0]).toNumber());
 			})
 	})
