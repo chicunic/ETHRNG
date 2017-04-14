@@ -12,7 +12,9 @@ contract('Randao', function (accounts) {
 		console.log('newrandao at blockNumber: ', web3.eth.blockNumber);
 		return Randao.deployed().then(function (instance) {
 			randao = instance;
-			randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether") })//生成一个区块			
+			return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether") })//生成一个区块					
+		}).then((tx)=>{
+			console.log("合约号：" ,tx);
 			return randao.numCampaigns.call();
 		}).then((campaignid)=>{
 			campaignID = campaignid.toNumber() - 1;

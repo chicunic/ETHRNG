@@ -7,15 +7,18 @@ contract('Randao', function (accounts) {
 		var deposit = web3.toWei('1', 'ether');
 		var campaignID;
 		var secret;
-
+		var tem1;
 		//console.log('gasprice:', web3.eth.gasPrice.toNumber())
 		console.log('target blockNumber: ', bnum);
 		console.log('newrandao at blockNumber: ', web3.eth.blockNumber);
 		return Randao.deployed().then(function (instance) {
 			randao = instance;
+			tem1= web3.eth.getBalance(accounts[0]).toNumber();
 			return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether") })
 		}).then((tx1) => {
-			console.log('发起一次产生随机送活动交易信息', tx1);
+			//console.log('发起一次产生随机送活动交易信息', tx1);
+			var tem2= web3.eth.getBalance(accounts[0]).toNumber();
+			console.log('gas', tem1-tem2);
 			return randao.numCampaigns.call();
 		}).then(function (campaignid) {
 			campaignID = campaignid.toNumber() - 1;
