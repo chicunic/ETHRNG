@@ -48,78 +48,41 @@ window.App = {
     status.innerHTML = message;
   },
 
-    
-	  // Randao.deployed().then(function (instance) {
-    //   alert(2);
-		// 	randao = instance;
-		// 	randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether") })//生成一个区块			
-		// 	alert("Start Success!");return randao.numCampaigns.call();
-		// }).then((campaignid)=>{
-		// 	campaignID = campaignid.toNumber() - 1;
-		// 	console.log('campaignId', campaignID);
-		// 	for(var i=1;i<=4;i++){	//生成四个区块
-		// 		secret=10*i;
-		// 		randao.commit(campaignID, secret, { from: accounts[i], value: web3.toWei(1, "ether") });
-		// 	}
-		// 	console.log('Now blockNumber: ', web3.eth.blockNumber);
-
-		// }).then(()=> {
-		// 		console.log('增加一个区块到达可以查看随机数区块高度');
-		// 		return randao.test();
-		// 	})
-		// 	.then(() => {
-		// 		console.log('增加区块后区块高度', web3.eth.blockNumber);
-		// 		return randao.getRandom.call(campaignID, { from: accounts[0] });
-		// 	}).then((random) => {
-    //     RandomNumber=random;
-    //     self.setStatus("Transaction complete!");
-		// 		console.log('随机数random:', RandomNumber);
-    //     alert('随机数random:\n'+ RandomNumber);				
-			//})
 
   runRandao: function() {
-    var self = this;
     var randao;
 		var bnum = web3.eth.blockNumber + 5;//目标区块高度
 		var deposit = web3.toWei('1', 'ether');
 		var campaignID;
 		var secret;
-    var RandomNumber;
-    alert("当前区块高度"+web3.eth.blockNumber);
+    // alert("当前区块高度"+web3.eth.blockNumber);
+    console.log('target blockNumber: ', bnum);
+		console.log('newrandao at blockNumber: ', web3.eth.blockNumber);
     Randao.deployed().then(function(instance) {
       randao = instance;
-			randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether") })//生成一个区块			
+			return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether"),gas:1e+18  })//生成一个区块					
+		}).then((tx)=>{
+			console.log("合约号：" ,tx);
 			return randao.numCampaigns.call();
 		}).then((campaignid)=>{
-			campaignID = campaignid.toNumber();
-			alert('campaignId'+ campaignID);
+			campaignID = campaignid.toNumber() - 1;
+			console.log('campaignId', campaignID);
 			for(var i=1;i<=4;i++){	//生成四个区块
 				secret=10*i;
 				randao.commit(campaignID, secret, { from: accounts[i], value: web3.toWei(1, "ether") });
-			}	
+			}
+			console.log('Now blockNumber: ', web3.eth.blockNumber);
+
 		}).then(()=> {
-        randao.test();
-    }).then(()=> {
-       //alert('Now blockNumber: '+ web3.eth.blockNumber);
-       //randao.commit(campaignID, 10, { from: accounts[2], value: web3.toWei(1, "ether") });		
-       alert('参与之后: '+ web3.eth.blockNumber);
-			 randao.test();      
+				console.log('增加一个区块到达可以查看随机数区块高度');
+				return randao.test({ from: accounts[0],gas:1e+18 });
 			})
 			.then(() => {
-				alert('test增加区块后区块高度'+ web3.eth.blockNumber);
-				return randao.getRandom.call(campaignID, { from: accounts[0] });       
+				console.log('增加区块后区块高度', web3.eth.blockNumber);
+				return randao.getRandom.call(campaignID, { from: accounts[0],gas:1e+19});
 			}).then((random) => {
-        RandomNumber=random.toNumber();
-        alert('随机数random:\n'+ RandomNumber);				
+				console.log('随机数random:', random);				
 			})
-      /*return meta.getBalance.call(account, {from: account});
-    }).then(function(value) {
-      var balance_element = document.getElementById("balance");
-      balance_element.innerHTML = value.valueOf();
-    }).catch(function(e) {
-      console.log(e);
-      self.setStatus("Error getting balance; see log.");
-    });*/
   }
 };
 
