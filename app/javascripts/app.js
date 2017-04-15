@@ -60,29 +60,30 @@ window.App = {
     console.log('newrandao at blockNumber: ', web3.eth.blockNumber);
     Randao.deployed().then(function (instance) {
       randao = instance;
-      return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether"), gas: 1e+17 })//生成一个区块					
-    }).then((tx) => {
-      console.log("合约号：", tx);
-      return randao.numCampaigns.call();
-    }).then((campaignid) => {
-      campaignID = campaignid.toNumber() - 1;
-      console.log('campaignId', campaignID);
-      for (var i = 1; i <= 4; i++) {	//生成四个区块
-        var seedsecret = secret[i - 1];
-        randao.commit(campaignID, seedsecret, { from: accounts[i], value: web3.toWei(1, "ether"), gas: 1e+17 });
-      }
-      console.log('Now blockNumber: ', web3.eth.blockNumber);
+			return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "finney"),gas:1e+17  })//生成一个区块					
+		}).then((tx)=>{
+			console.log("合约号：" ,tx);
+			return randao.numCampaigns.call();
+		}).then((campaignid)=>{
+			campaignID = campaignid.toNumber() - 1;
+			console.log('campaignId', campaignID);
+			for(var i=1;i<=4;i++){	//生成四个区块
+				var seedsecret=secret[i-1];
+				randao.commit(campaignID, seedsecret, { from: accounts[i], value: web3.toWei(1, "ether"),gas:1e+17 });
+			}
+			console.log('Now blockNumber: ', web3.eth.blockNumber);
 
-    }).then(() => {
-      console.log('增加一个区块到达可以查看随机数区块高度');
-      return randao.test({ from: accounts[0], gas: 1e+17 });
-    })
-      .then(() => {
-        console.log('增加区块后区块高度', web3.eth.blockNumber);
-        return randao.getRandom.call(campaignID, { from: accounts[0] });
-      }).then((random) => {
-        console.log('随机数random:', random);
-      })
+		}).then(()=> {
+				console.log('增加一个区块到达可以查看随机数区块高度');
+				return randao.test({ from: accounts[0],gas:1e+17 });
+			})
+			.then(() => {
+				console.log('增加区块后区块高度', web3.eth.blockNumber);
+				return randao.getRandom.call(campaignID, { from: accounts[0]});
+			}).then((random) => {
+        //alert("当前区块高度"+random);
+				console.log('随机数random:', random);				
+			})
   }
 };
 
