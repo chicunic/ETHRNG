@@ -21,9 +21,7 @@ window.App = {
                 alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
                 return;
             }
-
             accounts = accs;
-            //self.runRandao();
         });
     },
 
@@ -37,7 +35,8 @@ window.App = {
 
         // 从 web 接收的参数值
         // bnum 目标区块数
-        var bnum = web3.eth.blockNumber + $.get_bnum();
+        var get_bnum = $.get_bnum();
+        var bnum = web3.eth.blockNumber + get_bnum;
         console.log('目标区块数 bnum: ', bnum);
         // deposit 押金
         var deposit = web3.toWei($.get_deposit(), 'ether');
@@ -71,13 +70,13 @@ window.App = {
             console.log('campaignID: ', campaignID);
             for (var i = 1; i <= participant; i++) {
                 var seedsecret = secret_list[i - 1];
-                console('参与者', i, '提交的随机数: ', seedsecret);
+                console.log('参与者', i, '提交的随机数: ', seedsecret);
                 randao.commit(campaignID, seedsecret, { from: accounts[i], value: deposit, gas: 1e+17 });
             }
             console.log('当前区块号: ', web3.eth.blockNumber);
         }).then(function () {
             var current_blockNumber = web3.eth.blockNumber;
-            while (web3.eth.blockNumber <= bnum) {
+            for (var i = 0; i < get_bnum - participant; i++) {
                 randao.test({ from: accounts[0], gas: 1e+17 });
                 console.log('当前区块号: ', web3.eth.blockNumber);
             }
@@ -86,19 +85,18 @@ window.App = {
             return randao.getRandom.call(campaignID, { from: accounts[0] });
             }).then(function (random) {
                 $('#show_result').innerHTML = random;
-            console.log('生成的随机数为:', random);
+            console.log('生成的随机数为: ', random);
         });
     }
 };
 
 window.addEventListener('load', function () {
     if (typeof web3 !== 'undefined') {
-        console.warn('Using web3 detected from external source. If you find that your accounts don\'t appear or you have 0 MetaCoin, ensure you\'ve configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask')
+        //console.warn('Using web3 detected from external source. If you find that your accounts don\'t appear or you have 0 MetaCoin, ensure you\'ve configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask')
         window.web3 = new Web3(web3.currentProvider);
     } else {
-        console.warn('No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it\'s inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask');
+        //console.warn('No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it\'s inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask');
         window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     }
-
     App.start();
 });
