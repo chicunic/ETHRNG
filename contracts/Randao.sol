@@ -35,7 +35,7 @@ contract Randao {
 	// 创建活动
 	function newCampaign(uint32 _bnum, uint96 _deposit, uint256 _target)
 		payable  {
-			_campaignID = campaigns.length++;
+			uint256 _campaignID = campaigns.length++;
 			Campaign c = campaigns[_campaignID];
 			numCampaigns++;
 			c.target=_target;
