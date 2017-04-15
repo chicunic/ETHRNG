@@ -12,12 +12,13 @@
     var current_secret = new Array(); // 当前生成的 secret 的值
     var secret_list = new Array(); // 全部生成的 sercet[] 的值
 
-    // 点击提交活动按钮
     var current_bnum = -1; // 目标区块数
     var current_deposit = -1; // 押金
     var current_lowest = -1; // 目标最低人数
     var current_participant = -1; // 实际参与人数
+    var secret_list = new Array(); // 全部生成的 sercet[] 的值
 
+    // 点击提交活动按钮
     $("#input_create").click(function () {
         current_bnum = Number($('#input_bnum').val());
         console.log('current_bnum: ', current_bnum);
@@ -27,12 +28,12 @@
         console.log('current_lowest: ', current_lowest);
         current_participant = Number($('#input_participant').val());
         console.log('current_participant: ', current_participant);
-        if (current_bnum > current_lowest // 目标区块数应大于最低参与人数
-            && current_lowest > current_participant // 最低参与人数应大于实际参与人数
-            && current_participant > 0 // 实际参与人数应大于0
+        if (current_bnum > current_participant // 目标区块数应大于最低参与人数
+            && current_participant > current_lowest // 实际参与人数应大于最低参与人数
+            && current_lowest > 0 // 实际参与人数应大于0
             && current_deposit > 0 // 押金应大于0
         ) {
-            max_count = current_lowest;
+            max_count = current_participant;
             alert('发起活动成功！');
             $('#input_bnum').attr('disabled', true);
             $('#input_deposit').attr('disabled', true);
@@ -44,6 +45,22 @@
         else
             alert('输入值不合法！');
     });
+    // 返回值给 app
+    $.get_bnum = function () {
+        return current_bnum;
+    }
+    $.get_deposit = function () {
+        return current_deposit;
+    }
+    $.get_lowest = function () {
+        return current_lowest;
+    }
+    $.get_participant = function () {
+        return current_participant;
+    }
+    $.get_secret_list = function (){
+        return secret_list;
+    }
 
     // 当鼠标指针在指定的元素中移动时
     $("#canvas").mousemove(function (e) {
@@ -81,6 +98,8 @@
             current_count++;
         }
     }
+
+    
 
     /*$('#input_secret').click(function () {
         window.App.start();
