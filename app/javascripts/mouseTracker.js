@@ -58,7 +58,7 @@
     $.get_participant = function () {
         return current_participant;
     }
-    $.get_secret_list = function (){
+    $.get_secret_list = function () {
         return secret_list;
     }
 
@@ -99,7 +99,7 @@
         }
     }
 
-    
+
 
     /*$('#input_secret').click(function () {
         window.App.start();
