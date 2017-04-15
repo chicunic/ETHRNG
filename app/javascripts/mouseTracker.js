@@ -29,9 +29,9 @@
         current_participant = Number($('#input_participant').val());
         console.log('current_participant: ', current_participant);
         if (current_bnum > current_participant // 目标区块数应大于最低参与人数
-            && current_participant > current_lowest // 实际参与人数应大于最低参与人数
+            && current_participant >=current_lowest // 实际参与人数应大于最低参与人数
             && current_lowest > 0 // 实际参与人数应大于0
-            && current_deposit > 0 // 押金应大于0
+            && current_deposit > 0  // 押金应大于0
         ) {
             max_count = current_participant;
             alert('发起活动成功！');
@@ -98,10 +98,4 @@
             current_count++;
         }
     }
-
-
-
-    /*$('#input_secret').click(function () {
-        window.App.start();
-    });*/
 });

@@ -17,8 +17,8 @@ contract Randao {
 		uint32 bnum; //截至时间
 		uint96 deposit; //押金
 		//uint256 campaignshash; // 活动块hash，用于计算那些人参与随机运算
-		uint256	target; // 目标参与人数
-		uint256	number; // 实际参与者人数
+		uint256 target; // 目标参与人数
+		uint256 number; // 实际参与者人数
 		bytes32 random; // 随机数
 		uint256 bountypot; // 奖金
 		bool settled; // 产生随机数是否成功
@@ -38,7 +38,7 @@ contract Randao {
 			uint256 _campaignID = campaigns.length++;
 			Campaign c = campaigns[_campaignID];
 			numCampaigns++;
-			c.target=_target;
+			c.target = _target;
 			c.bnum = _bnum;
 			c.deposit = _deposit;
 			//c.campaignshash = uint(block.blockhash(block.number - 1));
@@ -50,7 +50,7 @@ contract Randao {
 	modifier checkTime(uint256 _bnum) {if (block.number >_bnum) throw; _;} // 检查提交时间
 	modifier beFalse(bool _t) { if (_t) throw; _; } // 判断是否为假
 
-	//参与者提交随机数
+	// 参与者提交随机数
 	function commit(uint256 _campaignID, bytes32 _s) external payable {
 		Campaign c = campaigns[_campaignID];
 		commitmentCampaign(_campaignID, _s, c);
@@ -67,9 +67,9 @@ contract Randao {
 		beFalse(c.participants[msg.sender].partaken)
 		internal {
 			c.number++;
-			uint256 num=c.number;
-			//c.secret[num]=_s;
-			c.secret[num]=sha3(_s);
+			uint256 num = c.number;
+			//c.secret[num] = _s;
+			c.secret[num] = sha3(_s);
 			c.participants[msg.sender] = Participant(_s,0,true,false);
 	}
 
@@ -194,12 +194,11 @@ contract Randao {
 		internal returns (bytes32) {
 			c.settled = true;
 			uint256 numCombination = countCombinationNo(c.number, c.target); // 计算组合数
-			uint campaignshash=uint(block.blockhash(block.number-1));
-			//uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash); // 计算选中结果
+			uint campaignshash = uint(block.blockhash(block.number - 1));
 			uint256 selectedResult = selectedCombination(c.number, c.target, campaignshash); // 计算选中结果
 			for(uint256 i = 1; i <= c.number; i++) {
 				if(whetherSelected(c.number, i, selectedResult))
-					c.random^=c.secret[i];
+					c.random ^= c.secret[i];
 			}
 			return c.random;
 	}
