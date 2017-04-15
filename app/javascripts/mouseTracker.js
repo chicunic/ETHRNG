@@ -6,8 +6,8 @@
     var max_count = -1; // 需要生成的 secret 的个数
     var current_count = 0; // 当前生成的 secret 的个数
 
-    var chars = "0123456789ABCDEF"; // 可接受的字符列表
-    var chars_list = chars.split(""); // 将字符串拆分成字符数组
+    var chars = '0123456789ABCDEF'; // 可接受的字符列表
+    var chars_list = chars.split(''); // 将字符串拆分成字符数组
 
     var current_secret = new Array(); // 当前生成的 secret 的值
     var secret_list = new Array(); // 全部生成的 sercet[] 的值
@@ -19,7 +19,7 @@
     var secret_list = new Array(); // 全部生成的 sercet[] 的值
 
     // 点击提交活动按钮
-    $("#input_create").click(function () {
+    $('#input_create').click(function () {
         current_bnum = Number($('#input_bnum').val());
         console.log('current_bnum: ', current_bnum);
         current_deposit = Number($('#input_deposit').val());
@@ -63,7 +63,7 @@
     }
 
     // 当鼠标指针在指定的元素中移动时
-    $("#canvas").mousemove(function (e) {
+    $('#canvas').mousemove(function (e) {
         var X = -1; // X 坐标
         var Y = -1; // Y 坐标
 
@@ -75,7 +75,7 @@
             createSingleSecret(X, Y);
         }
         else {
-            $("#canvas").hide();
+            $('#canvas').hide();
             //createSecretList();
         }
     });
@@ -85,16 +85,16 @@
         if (X !== -1 && Y !== -1)
             num_mix = X + Y;
         /*else
-            alert("Invalid X or Y!\n");*/
+            alert('Invalid X or Y!\n');*/
         var num_mod = num_mix % 16;
         if (current_length < max_length && num_mod !== -1)
             current_secret[current_length++] = chars_list[num_mod];
         /*else
-            alert("Invalid num_mod!\n");*/
+            alert('Invalid num_mod!\n');*/
         if (current_length >= 63) {
             current_length = 0;
             secret_list[current_count] = current_secret.join('');
-            $("#show_numbers").append(current_count + ': ' + secret_list[current_count] + '<br />');
+            $('#show_numbers').append(current_count + ': ' + secret_list[current_count] + '<br />');
             current_count++;
         }
     }

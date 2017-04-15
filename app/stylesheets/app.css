@@ -1,21 +1,41 @@
 ﻿body {
 }
 
-#canvas {
+#main1{
+    position: relative;
+}
+
+#main1 label {
+    width: 200px;
+    font-family: 'Microsoft YaHei UI';
+    font-size: 16pt;
+}
+
+#main1 input {
+    width: 200px;
+    font-family: 'Microsoft YaHei UI';
+    font-size: 16pt;
+}
+
+#main2 {
+    position: relative;
+}
+
+canvas {
     width: 1280px;
     height: 800px;
-    background-color: lavenderblush;
+    position: absolute;
+    top: 0;
+    left: 0;
     display: none;
 }
 
 #show_numbers {
     width: 1280px;
     height: 800px;
-    background-color: azure;
-}
-
-#show_results {
-    width: 1280px;
-    height: 50px;
-    background-color: #808080;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: lavenderblush;
 }
