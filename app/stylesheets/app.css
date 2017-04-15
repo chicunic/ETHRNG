@@ -39,3 +39,7 @@ canvas {
     z-index: -1;
     background-color: lavenderblush;
 }
+
+#submit_secrets {
+    top: 800px;
+}

@@ -19,7 +19,7 @@
     var secret_list = new Array(); // 全部生成的 sercet[] 的值
 
     // 点击提交活动按钮
-    $('#input_create').click(function () {
+    $('#btn_submit_activity').click(function () {
         current_bnum = Number($('#input_bnum').val());
         console.log('current_bnum: ', current_bnum);
         current_deposit = Number($('#input_deposit').val());
@@ -39,8 +39,8 @@
             $('#input_deposit').attr('disabled', true);
             $('#input_lowest').attr('disabled', true);
             $('#input_participant').attr('disabled', true);
-            $('#input_create').hide();
-            $('#canvas').show();
+            $('#btn_submit_activity').hide();
+            $('canvas').show();
         }
         else
             alert('输入值不合法！');
@@ -63,7 +63,7 @@
     }
 
     // 当鼠标指针在指定的元素中移动时
-    $('#canvas').mousemove(function (e) {
+    $('canvas').mousemove(function (e) {
         var X = -1; // X 坐标
         var Y = -1; // Y 坐标
 
@@ -75,7 +75,7 @@
             createSingleSecret(X, Y);
         }
         else {
-            $('#canvas').hide();
+            $('canvas').hide();
             //createSecretList();
         }
     });
