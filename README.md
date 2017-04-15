@@ -81,6 +81,13 @@ Edit on 19 March, 2017
 Build on 12 March, 2017
 
 --------------------------------
+六、开启testrpc
+打开终端输入 testrpc -g 10 -l 1e+20 -a 10
+-g +gasprice 设置每次gas价格 -l +gaslimit设置每次gas的最大限制 -a accounts设置账户数
+七、将合约部署到私有链上
+truffle compile 编译合约
+truffle migrate 连接到私链网络
+npm run dev     运行前端
 
 参考资料：
 1. https://github.com/ethereum/go-ethereum
