@@ -1,5 +1,5 @@
-import "../stylesheets/app.css";
-import "../javascripts/mouseTracker.js";
+import '../stylesheets/app.css';
+import '../javascripts/mouseTracker.js';
 import { default as Web3 } from 'web3';
 import { default as contract } from 'truffle-contract'
 import randao_artifacts from '../../build/contracts/Randao.json'
@@ -14,11 +14,11 @@ window.App = {
 
         web3.eth.getAccounts(function (err, accs) {
             if (err != null) {
-                alert("There was an error fetching your accounts.");
+                alert('There was an error fetching your accounts.');
                 return;
             }
             if (accs.length == 0) {
-                alert("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+                alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
                 return;
             }
 
@@ -28,7 +28,7 @@ window.App = {
     },
 
     setStatus: function (message) {
-        var status = document.getElementById("status");
+        var status = document.getElementById('status');
         status.innerHTML = message;
     },
 
@@ -42,7 +42,7 @@ window.App = {
         // deposit 押金
         var deposit = web3.toWei($.get_deposit(), 'ether');
         console.log('押金 deposit: ', deposit);
-        // lowest" 目标最低参与人数
+        // lowest 目标最低参与人数
         var lowest = $.get_lowest();
         console.log('目标最低参与人数 lowest: ', deposit);
         // participant 实际参与人数
@@ -64,7 +64,7 @@ window.App = {
             randao = instance;
             return randao.newCampaign(bnum, deposit, lowest, { from: accounts[0], value: finney, gas: 1e+17 }) // 生成一个区块
         }).then(function (tx) {
-            console.log("合约号: ", tx);
+            console.log('合约号: ', tx);
             return randao.numCampaigns.call();
         }).then(function (campaignid) {
             campaignID = campaignid.toNumber() - 1;
@@ -84,7 +84,8 @@ window.App = {
         }).then(function () {
             console.log('增加区块后区块高度: ', web3.eth.blockNumber);
             return randao.getRandom.call(campaignID, { from: accounts[0] });
-        }).then(function (random) {
+            }).then(function (random) {
+                $('#show_result').innerHTML = random;
             console.log('生成的随机数为:', random);
         });
     }
@@ -92,11 +93,11 @@ window.App = {
 
 window.addEventListener('load', function () {
     if (typeof web3 !== 'undefined') {
-        console.warn("Using web3 detected from external source. If you find that your accounts don't appear or you have 0 MetaCoin, ensure you've configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask")
+        console.warn('Using web3 detected from external source. If you find that your accounts don\'t appear or you have 0 MetaCoin, ensure you\'ve configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask')
         window.web3 = new Web3(web3.currentProvider);
     } else {
-        console.warn("No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask");
-        window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        console.warn('No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it\'s inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask');
+        window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     }
 
     App.start();
