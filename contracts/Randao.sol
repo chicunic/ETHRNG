@@ -30,6 +30,7 @@ contract Randao {
 	// 全局变量
 	uint256 public numCampaigns; // 活动数
 	Campaign[] public campaigns; // 活动数组
+
 	uint256 public flag;
 	// 创建活动
 	function newCampaign(uint32 _bnum, uint96 _deposit, uint256 _target)
@@ -40,7 +41,7 @@ contract Randao {
 			c.target=_target;
 			c.bnum = _bnum;
 			c.deposit = _deposit;
-			//c.campaignshash = uint(block.blockhash(block.number-1));
+			//c.campaignshash = uint(block.blockhash(block.number - 1));
 			c.bountypot = msg.value;
 			c.consumers[msg.sender] = Consumer(msg.sender, msg.value);
 	}
@@ -89,7 +90,6 @@ contract Randao {
 	----------------*/
 
 	// 计算阶乘
-
 	function countFactorial(uint256 natural)
 		internal returns(uint256) {
 			uint256 factorial = 1;
@@ -102,7 +102,6 @@ contract Randao {
 	}
 	
 	// 计算组合数 C(n, m)
-
 	function countCombinationNo(uint256 numParticipant, uint256 numSelected)
 		internal returns(uint256) {
 			uint256 up = countFactorial(numParticipant); // 分子
@@ -112,7 +111,6 @@ contract Randao {
 	}
 
 	// 计算选中的参与者排列
-
 	function selectedCombination(uint256 numParticipant, uint256 numSelected, uint256 blockHash)
 		internal returns(uint256) {
 			uint256 numCombination = countCombinationNo(numParticipant, numSelected);
@@ -163,7 +161,6 @@ contract Randao {
 	}
 
 	// 判断是否被选中
-
 	function whetherSelected(uint256 numParticipant, uint256 numSelected, uint256 selectedResult)
 		internal returns(bool) {
 			uint256 b = selectedResult >>(numParticipant - numSelected)& 1;
@@ -177,12 +174,12 @@ contract Randao {
 	计算过程结束
 	----------------*/
 
-	//为了增加区块高度，不参与实际流程
+	// 为了增加区块高度，不参与实际流程
 	function test() {	
 		flag++;
 	}
 
-	//获取随机数
+	// 获取随机数
 	function getRandom(uint256 _campaignID)
 		returns (bytes32) {
 			Campaign c = campaigns[_campaignID];
@@ -196,8 +193,8 @@ contract Randao {
 			c.settled = true;
 			uint256 numCombination = countCombinationNo(c.number, c.target); // 计算组合数
 			uint campaignshash=uint(block.blockhash(block.number-1));
-			//uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash);//计算选中结果
-			uint256 selectedResult = selectedCombination(c.number, c.target, campaignshash);//计算选中结果
+			//uint256 selectedResult = selectedCombination(c.number, c.target, c.campaignshash); // 计算选中结果
+			uint256 selectedResult = selectedCombination(c.number, c.target, campaignshash); // 计算选中结果
 			for(uint256 i = 1; i <= c.number; i++) {
 				if(whetherSelected(c.number, i, selectedResult))
 					c.random^=c.secret[i];
@@ -205,7 +202,7 @@ contract Randao {
 			return c.random;
 	}
 
-	//获取奖金
+	// 获取奖金
 	function getMyBounty(uint256 _campaignID) external {
 		Campaign c = campaigns[_campaignID];
 		Participant p = c.participants[msg.sender];
@@ -241,7 +238,7 @@ contract Randao {
 			}
 	}
 
-	//如果生成随机送失败发起者返回部分赏金
+	// 如果生成随机送失败发起者返回部分赏金
 	function refundBounty(uint256 _campaignID) external {
 		Campaign c = campaigns[_campaignID];
 		returnBounty(_campaignID, c);

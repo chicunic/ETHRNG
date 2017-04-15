@@ -2,7 +2,7 @@
 import "../stylesheets/app.css";
 
 // Import libraries we need.
-import { default as Web3} from 'web3';
+import { default as Web3 } from 'web3';
 import { default as contract } from 'truffle-contract'
 
 // Import our contract artifacts and turn them into usable abstractions.
@@ -18,14 +18,14 @@ var accounts;
 var account;
 
 window.App = {
-  start: function() {
+  start: function () {
     var self = this;
 
     // Bootstrap the MetaCoin abstraction for Use.
     Randao.setProvider(web3.currentProvider);
 
     // Get the initial account balance so it can be displayed.
-    web3.eth.getAccounts(function(err, accs) {
+    web3.eth.getAccounts(function (err, accs) {
       if (err != null) {
         alert("There was an error fetching your accounts.");
         return;
@@ -38,55 +38,55 @@ window.App = {
 
       accounts = accs;
       account = accounts[0];
-     // alert(0);
+      // alert(0);
       self.runRandao();
     });
   },
 
-  setStatus: function(message) {
+  setStatus: function (message) {
     var status = document.getElementById("status");
     status.innerHTML = message;
   },
 
 
-  runRandao: function() {
+  runRandao: function () {
     var randao;
-		var bnum = web3.eth.blockNumber + 5;//目标区块高度
-		var deposit = web3.toWei('1', 'ether');
-		var campaignID;
-		 var secret=new Array(1,10,100,1000);
+    var bnum = web3.eth.blockNumber + 5;//目标区块高度
+    var deposit = web3.toWei('1', 'ether');
+    var campaignID;
+    var secret = new Array(1, 10, 100, 1000);
     // alert("当前区块高度"+web3.eth.blockNumber);
     console.log('target blockNumber: ', bnum);
-		console.log('newrandao at blockNumber: ', web3.eth.blockNumber);
-    Randao.deployed().then(function(instance) {
+    console.log('newrandao at blockNumber: ', web3.eth.blockNumber);
+    Randao.deployed().then(function (instance) {
       randao = instance;
-			return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether"),gas:1e+17  })//生成一个区块					
-		}).then((tx)=>{
-			console.log("合约号：" ,tx);
-			return randao.numCampaigns.call();
-		}).then((campaignid)=>{
-			campaignID = campaignid.toNumber() - 1;
-			console.log('campaignId', campaignID);
-			for(var i=1;i<=4;i++){	//生成四个区块
-				var seedsecret=secret[i-1];
-				randao.commit(campaignID, seedsecret, { from: accounts[i], value: web3.toWei(1, "ether"),gas:1e+17 });
-			}
-			console.log('Now blockNumber: ', web3.eth.blockNumber);
+      return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "ether"), gas: 1e+17 })//生成一个区块					
+    }).then((tx) => {
+      console.log("合约号：", tx);
+      return randao.numCampaigns.call();
+    }).then((campaignid) => {
+      campaignID = campaignid.toNumber() - 1;
+      console.log('campaignId', campaignID);
+      for (var i = 1; i <= 4; i++) {	//生成四个区块
+        var seedsecret = secret[i - 1];
+        randao.commit(campaignID, seedsecret, { from: accounts[i], value: web3.toWei(1, "ether"), gas: 1e+17 });
+      }
+      console.log('Now blockNumber: ', web3.eth.blockNumber);
 
-		}).then(()=> {
-				console.log('增加一个区块到达可以查看随机数区块高度');
-				return randao.test({ from: accounts[0],gas:1e+17 });
-			})
-			.then(() => {
-				console.log('增加区块后区块高度', web3.eth.blockNumber);
-				return randao.getRandom.call(campaignID, { from: accounts[0]});
-			}).then((random) => {
-				console.log('随机数random:', random);				
-			})
+    }).then(() => {
+      console.log('增加一个区块到达可以查看随机数区块高度');
+      return randao.test({ from: accounts[0], gas: 1e+17 });
+    })
+      .then(() => {
+        console.log('增加区块后区块高度', web3.eth.blockNumber);
+        return randao.getRandom.call(campaignID, { from: accounts[0] });
+      }).then((random) => {
+        console.log('随机数random:', random);
+      })
   }
 };
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined') {
     console.warn("Using web3 detected from external source. If you find that your accounts don't appear or you have 0 MetaCoin, ensure you've configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask")
