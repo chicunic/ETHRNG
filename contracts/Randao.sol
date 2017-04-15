@@ -82,8 +82,7 @@ contract Randao {
 	//提交随机数是否结束
 	modifier bountyPhase(uint256 _bnum) { if (block.number <= _bnum) throw; _; }
 
-	//检查是否达到目标参与者人数
-	modifier checkTarget(uint256 _target,uint256 _num) {if(_num < _target) throw; _;}
+	
 
 	/*----------------
 	计算过程开始
@@ -178,6 +177,8 @@ contract Randao {
 	function test() {	
 		flag++;
 	}
+	//检查是否达到目标参与者人数
+	modifier checkTarget(uint256 _target,uint256 _num) {if(_num < _target) throw; _;}
 
 	// 获取随机数
 	function getRandom(uint256 _campaignID)
@@ -189,6 +190,7 @@ contract Randao {
 	function returnRandom(Campaign storage c)
 		bountyPhase(c.bnum)
 		beConsumer(c.consumers[msg.sender].caddr)
+		checkTarget(c.target,c.number)
 		internal returns (bytes32) {
 			c.settled = true;
 			uint256 numCombination = countCombinationNo(c.number, c.target); // 计算组合数
