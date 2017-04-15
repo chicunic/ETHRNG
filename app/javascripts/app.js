@@ -1,5 +1,6 @@
 // Import the page's CSS. Webpack will know what to do with it.
-//import "../stylesheets/app.css";
+import "../stylesheets/app.css";
+import "../javascripts/mouseTracker.js";
 
 // Import libraries we need.
 import { default as Web3 } from 'web3';
@@ -38,7 +39,7 @@ window.App = {
 
       accounts = accs;
       account = accounts[0];
-      // alert(0);
+      //alert(0);
       //self.runRandao();
     });
   },
@@ -51,39 +52,44 @@ window.App = {
 
   runRandao: function () {
     var randao;
-    var bnum = web3.eth.blockNumber + current_bnum;//目标区块高度
-    var deposit = web3.toWei('1', 'ether');
+    var bnum = web3.eth.blockNumber + $.get_bnum();//目标区块高度
+    var deposit = web3.toWei($.get_deposit(), 'ether');
+    var finney = deposit;
     var campaignID;
-    var secret = new Array(1, 10, 100, 1000);
+    //var secret = new Array(1, 10, 100, 1000);
+    var secret = $.get_secret_list();
+    console.log('secret: ', secret);
     // alert("当前区块高度"+web3.eth.blockNumber);
     console.log('target blockNumber: ', bnum);
     console.log('newrandao at blockNumber: ', web3.eth.blockNumber);
     Randao.deployed().then(function (instance) {
       randao = instance;
-			return randao.newCampaign(bnum, deposit, 2, { from: accounts[0], value: web3.toWei(1, "finney"),gas:1e+17  })//生成一个区块					
-		}).then((tx)=>{
-			console.log("合约号：" ,tx);
-			return randao.numCampaigns.call();
-		}).then((campaignid)=>{
-			campaignID = campaignid.toNumber() - 1;
-			console.log('campaignId', campaignID);
-			for(var i=1;i<=4;i++){	//生成四个区块
-				var seedsecret=secret[i-1];
-				randao.commit(campaignID, seedsecret, { from: accounts[i], value: web3.toWei(1, "ether"),gas:1e+17 });
-			}
-			console.log('Now blockNumber: ', web3.eth.blockNumber);
+      return randao.newCampaign(bnum, deposit, $.get_lowest(), { from: accounts[0], value: finney, gas: 1e+17 })//生成一个区块					
+    }).then((tx) => {
+      console.log("合约号：", tx);
+      return randao.numCampaigns.call();
+    }).then((campaignid) => {
+      campaignID = campaignid.toNumber() - 1;
+      console.log('campaignID: ', campaignID);
+      var participant = $.get_participant();
+      console.log('participant: ', participant);
+      for (var i = 1; i <= participant; i++) {	//生成四个区块
+        var seedsecret = secret[i - 1];
+        randao.commit(campaignID, seedsecret, { from: accounts[i], value: deposit, gas: 1e+17 });
+      }
+      console.log('Now blockNumber: ', web3.eth.blockNumber);
 
-		}).then(()=> {
-				console.log('增加一个区块到达可以查看随机数区块高度');
-				return randao.test({ from: accounts[0],gas:1e+17 });
-			})
-			.then(() => {
-				console.log('增加区块后区块高度', web3.eth.blockNumber);
-				return randao.getRandom.call(campaignID, { from: accounts[0]});
-			}).then((random) => {
+    }).then(() => {
+      console.log('增加一个区块到达可以查看随机数区块高度');
+      return randao.test({ from: accounts[0], gas: 1e+17 });
+    })
+      .then(() => {
+        console.log('增加区块后区块高度', web3.eth.blockNumber);
+        return randao.getRandom.call(campaignID, { from: accounts[0] });
+      }).then((random) => {
         //alert("当前区块高度"+random);
-				console.log('随机数random:', random);				
-			})
+        console.log('随机数random:', random);
+      })
   }
 };
 
