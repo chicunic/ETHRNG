@@ -82,7 +82,7 @@
         }
     }
 
-    $('#input_secret').click(function () {
-        App.start();
-    });
+    /*$('#input_secret').click(function () {
+        window.App.start();
+    });*/
 });

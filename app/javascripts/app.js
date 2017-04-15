@@ -1,5 +1,5 @@
 // Import the page's CSS. Webpack will know what to do with it.
-import "../stylesheets/app.css";
+//import "../stylesheets/app.css";
 
 // Import libraries we need.
 import { default as Web3 } from 'web3';
@@ -39,7 +39,7 @@ window.App = {
       accounts = accs;
       account = accounts[0];
       // alert(0);
-      self.runRandao();
+      //self.runRandao();
     });
   },
 
@@ -51,7 +51,7 @@ window.App = {
 
   runRandao: function () {
     var randao;
-    var bnum = web3.eth.blockNumber + 5;//目标区块高度
+    var bnum = web3.eth.blockNumber + current_bnum;//目标区块高度
     var deposit = web3.toWei('1', 'ether');
     var campaignID;
     var secret = new Array(1, 10, 100, 1000);

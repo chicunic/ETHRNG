@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <title>ETHRNG</title>
-    <script src="javascripts/lib/jquery-3.2.1.js"></script>
-    <script src="javascripts/mouseTracker.js"></script>
-    <script src="javascripts/app.js"></script>
-    <link href="stylesheets/app.css" rel="stylesheet" />
+    <script src="app/javascripts/lib/jquery-3.2.1.js"></script>
+    <script src="app/javascripts/mouseTracker.js"></script>
+    <script src="app/javascripts/app.js"></script>
+    <link href="app/stylesheets/app.css" rel="stylesheet" />
 </head>
 <body>
     <div id="top">
@@ -24,7 +24,7 @@
         <!-- 鼠标轨迹生成种子集合 -->
         <canvas id="canvas"></canvas>
         <div id="show_numbers"></div>
-        <input id="input_secret" type="submit" value="提交用户随机数" />
+        <input id="input_secret" type="submit" value="提交用户随机数" onclick="App.runRandao()" />
         <div id="result">
             <div id="show_results"></div>
         </div>
