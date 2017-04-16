@@ -82,8 +82,6 @@ contract Randao {
 	//提交随机数是否结束
 	modifier bountyPhase(uint256 _bnum) { if (block.number <= _bnum) throw; _; }
 
-	
-
 	/*----------------
 	计算过程开始
 	----------------*/
@@ -99,7 +97,7 @@ contract Randao {
 			}
 			return factorial;
 	}
-	
+
 	// 计算组合数 C(n, m)
 	function countCombinationNo(uint256 numParticipant, uint256 numSelected)
 		internal returns(uint256) {
