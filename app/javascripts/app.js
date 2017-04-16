@@ -48,7 +48,7 @@ window.App = {
         var participant = $.get_participant();
         console.log('实际参与人数 participant: ', participant);
         // finney 赏金
-        var finney = deposit;
+        var finney = web3.toWei($.get_finney(), 'ether');;
         //var finney = web3.toWei($.get_finney(), 'ether');
         console.log('deposit: ', finney);
         // campaignID 活动号

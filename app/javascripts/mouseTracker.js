@@ -24,6 +24,7 @@
     var current_deposit = -1; // 押金
     var current_lowest = -1; // 目标最低人数
     var current_participant = -1; // 实际参与人数
+    var current_finney = -1; // 赏金
     var secret_list = new Array(); // 全部生成的 sercet[] 的值
 
     // 点击提交活动按钮
@@ -36,6 +37,8 @@
         console.log('current_lowest: ', current_lowest);
         current_participant = Number($('#input_participant').val());
         console.log('current_participant: ', current_participant);
+        current_finney = Number($('#input_finney').val());
+        console.log('current_finney: ', current_participant);
         if (current_bnum > current_participant // 目标区块数应大于最低参与人数
             && current_participant >= current_lowest // 实际参与人数应大于最低参与人数
             && current_lowest > 0 // 实际参与人数应大于0
@@ -47,6 +50,7 @@
             $('#input_deposit').attr('disabled', true);
             $('#input_lowest').attr('disabled', true);
             $('#input_participant').attr('disabled', true);
+            $('#input_finney').attr('disabled', true);
             $('#btn_submit_activity').hide();
             $('#main2').show();
         }
@@ -66,6 +70,9 @@
     $.get_participant = function () {
         return current_participant;
     }
+    $.get_finney = function () {
+        return current_finney;
+    }
     $.get_secret_list = function () {
         return secret_list;
     }
@@ -84,7 +91,6 @@
         }
         else {
             $('canvas').hide();
-            //createSecretList();
         }
     });
 
