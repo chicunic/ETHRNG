@@ -83,8 +83,8 @@ window.App = {
         }).then(function () {
             console.log('增加区块后区块高度: ', web3.eth.blockNumber);
             return randao.getRandom.call(campaignID, { from: accounts[0] });
-            }).then(function (random) {
-                $('#show_result').innerHTML = random;
+        }).then(function (random) {
+                $('#show_results').append(random);
             console.log('生成的随机数为: ', random);
         });
     }
