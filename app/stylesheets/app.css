@@ -25,9 +25,6 @@
         font-size: 28pt;
     }
 
-#main1 dev {
-}
-
 #main1 span {
     display: inline-block;
     width: 200px;
@@ -45,22 +42,25 @@
     height: 600px;
     position: relative;
     display: inline-block;
-    background-color: #000000;
 }
 
-    #main2 #main2_wrap canvas, #show_numbers {
+    #main2 #main2_wrap canvas {
+        width: 800px;
+        height: 600px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: transparent;
+    }
+
+    #show_numbers {
         width: 800px;
         height: 600px;
         position: absolute;
         left: 0;
         top: 0;
         background-color: aquamarine;
-    }
-
-    #main2 #main2_wrap #show_numbers {
-        background-color: hotpink;
-        z-index: -1;
-        /*display: none;*/
+        z-index: 0;
     }
 
 #main2 input {
@@ -71,5 +71,4 @@
 #main3 #show_results {
     height: 50px;
     display: inline-block;
-    background-color: hotpink;
 }
