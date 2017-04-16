@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+
+    $('#input_bnum').attr('disabled', false);
+    $('#input_deposit').attr('disabled', false);
+    $('#input_lowest').attr('disabled', false);
+    $('#input_participant').attr('disabled', false);
     $("#main2").hide();
     $("#main3").hide();
 
@@ -43,7 +48,7 @@
             $('#input_lowest').attr('disabled', true);
             $('#input_participant').attr('disabled', true);
             $('#btn_submit_activity').hide();
-            $('canvas').show();
+            $('#main2').show();
         }
         else
             alert('输入值不合法！');
@@ -85,6 +90,7 @@
 
     $('#btn_submit_secrets').click(function () {
         $('#btn_submit_secrets').hide();
+        $('#main3').show();
     });
 
     function createSingleSecret(X, Y) {
