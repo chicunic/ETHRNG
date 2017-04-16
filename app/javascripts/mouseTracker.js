@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    $("#main2").hide();
+    $("#main3").hide();
+
     // 随机数 secret 生成器
     var max_length = 64; // 随机数 secret 的总长度
     var current_length = 0; // 当前生成的 secret 的长度
@@ -29,7 +32,7 @@
         current_participant = Number($('#input_participant').val());
         console.log('current_participant: ', current_participant);
         if (current_bnum > current_participant // 目标区块数应大于最低参与人数
-            && current_participant >=current_lowest // 实际参与人数应大于最低参与人数
+            && current_participant >= current_lowest // 实际参与人数应大于最低参与人数
             && current_lowest > 0 // 实际参与人数应大于0
             && current_deposit > 0  // 押金应大于0
         ) {
@@ -78,6 +81,10 @@
             $('canvas').hide();
             //createSecretList();
         }
+    });
+
+    $('#btn_submit_secrets').click(function () {
+        $('#btn_submit_secrets').hide();
     });
 
     function createSingleSecret(X, Y) {
