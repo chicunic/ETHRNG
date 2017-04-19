@@ -36,7 +36,7 @@ window.App = {
     runRandao: function () {
         var randao;
         // 从 web 接收的参数值
-        let [
+        const [
             bnum, // bnum 目标区块数
             deposit, // deposit 押金
             lowest, // lowest 目标最低参与人数
