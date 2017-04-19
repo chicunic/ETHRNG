@@ -1,5 +1,8 @@
 import '../stylesheets/app.css';
-import '../javascripts/mouseTracker.js';
+import activity from '../javascripts/webReady'
+import { click_btn_submit_secrets } from '../javascripts/webEvents';
+
+
 import { default as Web3 } from 'web3';
 import { default as contract } from 'truffle-contract'
 import randao_artifacts from '../../build/contracts/Randao.json'
@@ -32,33 +35,34 @@ window.App = {
 
     runRandao: function () {
         var randao;
-
         // 从 web 接收的参数值
-        // bnum 目标区块数
-        var get_bnum = $.get_bnum();
-        var bnum = web3.eth.blockNumber + get_bnum;
+        let [
+            bnum, // bnum 目标区块数
+            deposit, // deposit 押金
+            lowest, // lowest 目标最低参与人数
+            participant, // participant 实际参与人数
+            finney, // finney 赏金
+            secret_list, // secret_list 用户提交的随机数列表
+            extra // 补充的循环次数
+        ] = [
+                web3.eth.blockNumber + activity.bnum,
+                web3.toWei(activity.deposit, 'ether'),
+                activity.lowest,
+                activity.participant,
+                activity.finney,
+                activity.secret_list,
+                activity.bnum = activity.participant
+            ];
+
+        console.log('当前区块数 blockNumber: ', web3.eth.blockNumber);
         console.log('目标区块数 bnum: ', bnum);
-        // deposit 押金
-        var deposit = web3.toWei($.get_deposit(), 'ether');
         console.log('押金 deposit: ', deposit);
-        // lowest 目标最低参与人数
-        var lowest = $.get_lowest();
-        console.log('目标最低参与人数 lowest: ', deposit);
-        // participant 实际参与人数
-        var participant = $.get_participant();
+        console.log('目标最低参与人数 lowest: ', lowest);
         console.log('实际参与人数 participant: ', participant);
-        // finney 赏金
-        var finney = web3.toWei($.get_finney(), 'ether');;
-        //var finney = web3.toWei($.get_finney(), 'ether');
-        console.log('deposit: ', finney);
-        // campaignID 活动号
-        var campaignID;
-        //var secret = new Array(1, 10, 100, 1000);
-        // secret_list 用户提交的随机数列表
-        var secret_list = $.get_secret_list();
+        console.log('赏金 finney: ', finney);
         console.log('secret_list: ', secret_list);
 
-        console.log('当前区块号: ', web3.eth.blockNumber);
+        let campaignID; // campaignID 活动号
         Randao.deployed().then(function (instance) {
             randao = instance;
             return randao.newCampaign(bnum, deposit, lowest, { from: accounts[0], value: finney, gas: 1e+17 }) // 生成一个区块
@@ -68,15 +72,14 @@ window.App = {
         }).then(function (campaignid) {
             campaignID = campaignid.toNumber() - 1;
             console.log('campaignID: ', campaignID);
-            for (var i = 1; i <= participant; i++) {
-                var seedsecret = secret_list[i - 1];
+            for (let i = 1; i <= participant; i++) {
+                let seedsecret = secret_list[i - 1];
                 console.log('参与者', i, '提交的随机数: ', seedsecret);
                 randao.commit(campaignID, seedsecret, { from: accounts[i], value: deposit, gas: 1e+17 });
             }
             console.log('当前区块号: ', web3.eth.blockNumber);
         }).then(function () {
-            var current_blockNumber = web3.eth.blockNumber;
-            for (var i = 0; i < get_bnum - participant; i++) {
+            for (let i = 0; i < extra; i++) {
                 randao.test({ from: accounts[0], gas: 1e+17 });
                 console.log('当前区块号: ', web3.eth.blockNumber);
             }
@@ -84,8 +87,7 @@ window.App = {
             console.log('增加区块后区块高度: ', web3.eth.blockNumber);
             return randao.getRandom.call(campaignID, { from: accounts[0] });
         }).then(function (random) {
-                $('#show_results').append(random);
-            console.log('生成的随机数为: ', random);
+            click_btn_submit_secrets(random);
         });
     }
 };
