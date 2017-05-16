@@ -1,38 +1,39 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title>ETHRNG</title>
     <script src="./app/javascripts/lib/jquery-3.2.1.js"></script>
     <script src="./app.js"></script>
-    <!--<link href="./stylesheets/app.css" rel="stylesheet" />-->
+    <script>var webVersion = 2;</script>
 </head>
+
 <body>
     <div id="topic">
-        <h1>随机数生成器（批量）</h1>
+        <h1>随机数生成器</h1>
     </div>
-
     <!-- 提交活动 -->
     <div id="main1">
         <div><span>目标区块数</span><input id="input_bnum" type="text" value="5" /></div>
         <div><span>押金</span><input id="input_deposit" type="text" value="1" /></div>
         <div><span>目标最低参与人数</span><input id="input_lowest" type="text" value="2" /></div>
         <div><span>*实际参与人数</span><input id="input_participant" type="text" value="4" /></div>
+        <div><span>赏金</span><input id="input_fenney" type="text" value="1" /></div>
         <div><input id="btn_submit_activity" type="button" value="提交活动" /></div>
     </div>
     <!-- 鼠标轨迹生成种子集合 -->
     <div id="main2">
         <div>请用鼠标在画布上移动</div>
-        <div id="main2_wrap">            
+        <div id="main2_wrap">
             <div id="show_numbers"></div>
             <canvas></canvas>
         </div><br />
-        <input id="btn_submit_secrets" type="button" value="提交用户随机数" onclick="App.runRandao()" />
     </div>
+    <!-- 生成随机数 -->
     <div id="main3">
-        <div id="result">
-            <div id="show_results">随机数：<br /></div>
-        </div>
+        <div id="show_results">随机数：<br /></div>
     </div>
 </body>
+
 </html>

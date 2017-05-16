@@ -4,7 +4,8 @@ import Activity from '../javascripts/classActivity';
 import {
     load_webpage,
     click_btn_submit_activity,
-    canvas_over
+    canvas_over,
+    canvas_over_2
 } from '../javascripts/webEvents';
 
 let activity = new Activity();
@@ -25,9 +26,13 @@ $(document).ready(function () {
         console.log('activity.participant: ', activity.participant);
         if (activity.secret_count < activity.participant) {
             activity.createSecret(X, Y);
-        }
-        else {
-            canvas_over();
+        } else {
+            if (webVersion == 1) {
+                canvas_over();
+            } else if (webVersion == 2) {
+                App.runRandao();
+                activity.clearSecret();
+            }
         }
     });
 });

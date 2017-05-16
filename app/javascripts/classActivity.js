@@ -50,4 +50,9 @@ export default class Activity {
         else
             this.createSecretList();
     }
+    // 清空本轮生成的 secret[]
+    clearSecret(){
+        this.secret_list = new Array();
+        this.secret_count = 0;
+    }
 }

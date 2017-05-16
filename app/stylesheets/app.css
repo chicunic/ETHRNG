@@ -1,7 +1,7 @@
-﻿body {
-}
-
-#topic, #main1, #main2, #main3 {
+﻿#topic,
+#main1,
+#main2,
+#main3 {
     max-width: 1600px;
     min-width: 800px;
     margin: 10px auto;
@@ -21,9 +21,9 @@
     background-color: transparent;
 }
 
-    #topic h1 {
-        font-size: 28pt;
-    }
+#topic h1 {
+    font-size: 28pt;
+}
 
 #main1 span {
     display: inline-block;
@@ -44,24 +44,27 @@
     display: inline-block;
 }
 
-    #main2 #main2_wrap canvas {
-        width: 800px;
-        height: 600px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        background-color: transparent;
-    }
+#main2 #main2_wrap canvas {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: transparent;
+}
 
-    #show_numbers {
-        width: 800px;
-        height: 600px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        background-color: aquamarine;
-        z-index: 0;
-    }
+#show_numbers {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: aquamarine;
+    z-index: 0;
+    font-family: Courier New, Courier, monospace;
+    font-size: 15pt;
+    line-height: 18px;
+}
 
 #main2 input {
     width: 200px;
@@ -71,4 +74,8 @@
 #main3 #show_results {
     height: 50px;
     display: inline-block;
+    font-family: Courier New, Courier, monospace;
+    font-size: 15pt;
+    line-height: 18px;
+    word-wrap: break-word;
 }

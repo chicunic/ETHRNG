@@ -87,6 +87,7 @@ window.App = {
             console.log('增加区块后区块高度: ', web3.eth.blockNumber);
             return randao.getRandom.call(campaignID, { from: accounts[0] });
         }).then(function (random) {
+            console.log('random: ', random);
             click_btn_submit_secrets(random);
         });
     }
