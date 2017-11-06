@@ -1,5 +1,5 @@
-var Randao = artifacts.require("./Randao.sol");
+var Ethrng = artifacts.require("./Ethrng.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Randao);
+  deployer.deploy(Ethrng);
 };

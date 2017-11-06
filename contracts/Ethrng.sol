@@ -1,6 +1,6 @@
-pragma solidity ^0.4.8;
+pragma solidity ^0.4.18;
 
-contract Randao {
+contract Ethrng {
 	struct Participant {
 		bytes32 secret; // 随机数
 		uint256 reward; // 奖励
