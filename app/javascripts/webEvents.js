@@ -1,6 +1,7 @@
 // webEvents.js
-/* global $ alert */
+/* global alert */
 
+import $ from 'jquery'
 // 初始化页面
 let loadWebpage = function e () {
   $('#input_bnum').attr('disabled', false)

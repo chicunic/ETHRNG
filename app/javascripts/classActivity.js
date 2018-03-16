@@ -1,4 +1,4 @@
-﻿// classActivity.js
+// classActivity.js
 
 import { showString } from '../javascripts/webEvents'
 
@@ -15,11 +15,11 @@ export default class Activity {
     this.singleSecret = [] // 正在生成的 secret
     this.singleSecretLength = 0 // 正在生成的 secret 的长度
 
-    this.bnum = -1   // 目标区块数
-    this.deposit = -1   // 押金
-    this.lowest = -1   // 目标最低人数
-    this.participant = -1   // 实际参与人数
-    this.finney = -1   // 赏金
+    this.bnum = -1 // 目标区块数
+    this.deposit = -1 // 押金
+    this.lowest = -1 // 目标最低人数
+    this.participant = -1 // 实际参与人数
+    this.finney = -1 // 赏金
   }
   // 生成单条 secret
   createSingleSecret (numMod) {

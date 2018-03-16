@@ -8,9 +8,9 @@ A random number generator based on the ethereum blockchain
 
 ## 要求
 
-Linux / macOS / Windows
+- Linux / macOS / Windows
 
-需要预先安装 Node.js
+- Node.js
 
 ## 安装
 
@@ -22,39 +22,39 @@ Linux / macOS / Windows
 
 	$ cd ETHRNG
 
-### 3. 安装 node 模块
+### 3. 安装 node 依赖
 
 	$ npm install
 
 ## 运行
 
-### 1. 进入 truffle 开发环境
+### 1. 打开终端，进入 truffle 开发环境
 
 	$ truffle develop
 
 ### 2. 编译合约
 
-	> compile
+	truffle(devolop)> compile
 
 ### 3. 部署合约
 
-	> migrate
+	truffle(develop)> migrate
 
-### 4. 测试脚本
+### 4. 运行测试脚本
 
-	> test
+	truffle(develop)> test
 
 ### 5. 测试 Web 站点
 
-新建一个终端，进入 ETHRNG 目录
+#### (1) 新建终端，进入 ETHRNG 目录
 
 	$ cd ETHRNG
 
-然后启动 Web 服务
+#### (2) 启动 Web 服务
 
 	$ npm run dev
 
-打开浏览器，访问 http://localhost:8080
+#### (3) 打开浏览器，访问 http://localhost:8080
 
 ## 参考
 
@@ -66,9 +66,9 @@ https://nodejs.org
 
 http://truffleframework.com
 
-### 3. webpack: Truffle Boxes
+### 3. webpack
 
-http://truffleframework.com/boxes/webpack
+https://webpack.js.org
 
 ### 4. Solidity
 

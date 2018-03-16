@@ -1,5 +1,7 @@
-var Ethrng = artifacts.require("./Ethrng.sol");
+/* global artifacts */
 
-module.exports = function(deployer) {
-  deployer.deploy(Ethrng);
-};
+var Ethrng = artifacts.require('./Ethrng.sol')
+
+module.exports = function (deployer) {
+  deployer.deploy(Ethrng)
+}

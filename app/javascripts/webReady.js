@@ -1,6 +1,7 @@
 // webReady.js
-/* global $ webVersion App */
+/* global webVersion App */
 
+import $ from 'jquery'
 import Activity from '../javascripts/classActivity'
 import {
   loadWebpage,
